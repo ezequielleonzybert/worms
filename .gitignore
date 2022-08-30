@@ -1,6 +1,7 @@
-#IGNORE:
-bin/
-obj/
+/bin/*
+/obj/*
+/bin/*/
+/obj/*/
 
-#NOT IGNORE
 !/bin/data/*
+!/bin/data/*/
