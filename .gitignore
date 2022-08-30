@@ -1,2 +1,6 @@
+#IGNORE:
 bin/
 obj/
+
+#NOT IGNORE
+!bin/data/
