@@ -10,7 +10,6 @@ public:
     int length;
     float spacing;
     vector<Particle> particles;
-    ofPolyline line;
     ofSpherePrimitive sphere;
 
     Worm(){};
@@ -38,7 +37,7 @@ public:
         {
             glm::vec3 force;
             force += p.gravity({0, 0, 0}, 0.05);
-            force += p.selfRepulsion(particles, 0.1);
+            force += p.selfRepulsion(particles, .1);
             p.constrain(particles, spacing);
             p.update(force);
         }
@@ -46,9 +45,6 @@ public:
     void draw()
     {
         ofNoFill();
-        // line.begin();
-        // line.clear();
-        // line.curveTo(particles.front().position);
         for (Particle p : particles)
         {
             sphere.setPosition(p.position);
@@ -70,10 +66,6 @@ public:
             // // ofDrawSphere({0, 0, 0}, 5);
             // ofPopMatrix();
         }
-        //         line.curveTo(particles.back().position);
-        //         line.end();
-        //
-        //         line.draw();
     }
 };
 

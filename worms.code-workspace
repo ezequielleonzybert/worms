@@ -14,7 +14,8 @@
 		"files.associations": {
 			"iostream": "cpp",
 			"regex": "cpp",
-			"ostream": "cpp"
+			"ostream": "cpp",
+			"cmath": "cpp"
 		}
 	}
 }

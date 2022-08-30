@@ -26,7 +26,6 @@ public:
         previous_position = position;
         position += velocity;
         direction = glm::normalize(position - previous_position);
-        
     }
     glm::vec3 selfRepulsion(vector<Particle> &particles, float magnitude)
     {
@@ -56,7 +55,8 @@ public:
         {
             distance = 1;
         }
-        return force_direction * distance * magnitude;
+        glm::vec3 force = force_direction * distance * magnitude;
+        return force;
     }
     void constrain(vector<Particle> &particles, float distance_limit)
     {

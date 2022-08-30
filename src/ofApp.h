@@ -31,6 +31,7 @@ public:
 	Worm worm;
 	ofEasyCam camera;
 	ofLight light1, light2;
+	ofTrueTypeFont font;
 
 	VideoRecorder vr;
 };
