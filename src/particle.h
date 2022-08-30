@@ -25,13 +25,8 @@ public:
         velocity += force;
         previous_position = position;
         position += velocity;
-
         direction = glm::normalize(position - previous_position);
-        if (ofGetElapsedTimef() > 1)
-        {
-            cout << force << " " << previous_position << endl;
-            // exit(0);
-        }
+        
     }
     glm::vec3 selfRepulsion(vector<Particle> &particles, float magnitude)
     {

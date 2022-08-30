@@ -30,7 +30,7 @@ public:
 
 	Worm worm;
 	ofEasyCam camera;
-	ofLight light;
+	ofLight light1, light2;
 
 	VideoRecorder vr;
 };

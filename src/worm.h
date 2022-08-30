@@ -14,10 +14,12 @@ public:
     ofSpherePrimitive sphere;
 
     Worm(){};
-    Worm(int length, float spacing)
+    Worm(int length, float spacing, float width, int resolution)
     {
         this->length = length;
         this->spacing = spacing;
+        sphere.setRadius(width);
+        sphere.setResolution(resolution);
 
         particles.push_back(Particle());
 
@@ -32,15 +34,14 @@ public:
     }
     void update()
     {
-        if (ofGetFrameNum() < 100)
-            for (Particle &p : particles)
-            {
-                glm::vec3 force;
-                //force += p.gravity({0, 0, 0}, 0.01);
-                force += p.selfRepulsion(particles, 0.1);
-                p.constrain(particles, spacing);
-                p.update(force);
-            }
+        for (Particle &p : particles)
+        {
+            glm::vec3 force;
+            force += p.gravity({0, 0, 0}, 0.05);
+            force += p.selfRepulsion(particles, 0.1);
+            p.constrain(particles, spacing);
+            p.update(force);
+        }
     }
     void draw()
     {
@@ -50,10 +51,12 @@ public:
         // line.curveTo(particles.front().position);
         for (Particle p : particles)
         {
+            sphere.setPosition(p.position);
+            sphere.draw();
             // line.curveTo(p.position);
             // glm::mat4 m;
             // m = glm::translate(p.position);
-            ofDrawLine(p.position, p.previous_position);
+            // ofDrawLine(p.position, p.previous_position);
             //             ofSetColor(ofColor::green);
             //             ofDrawSphere(p.position, .1f);
             //             ofSetColor(ofColor::red);
@@ -61,7 +64,6 @@ public:
             //             ofDrawSphere(p.previous_position, .1f);
             // m *= glm::rotate(p.direction,);
             // ofLine(p.position, p.position + p.direction*10);
-
             // ofPushMatrix();
             // ofMultMatrix(m);
             // //ofDrawCircle({0,0,0}, 5);
