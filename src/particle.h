@@ -6,7 +6,7 @@
 class Particle
 {
 public:
-    glm::vec3 position, previous_position, acceleration, velocity;
+    glm::vec3 position, previous_position, acceleration, velocity, direction;
 
     Particle()
     {
@@ -16,34 +16,52 @@ public:
     {
         this->position = position;
     }
-    void selfRepulsion(vector<Particle> &particles, float spacing)
+    void update(glm::vec3 force)
+    {
+        float limit = .001;
+        velocity.x = ofClamp(velocity.x, -limit, limit);
+        velocity.y = ofClamp(velocity.y, -limit, limit);
+        velocity.z = ofClamp(velocity.z, -limit, limit);
+        velocity += force;
+        previous_position = position;
+        position += velocity;
+
+        direction = glm::normalize(position - previous_position);
+        if (ofGetElapsedTimef() > 1)
+        {
+            cout << force << " " << previous_position << endl;
+            // exit(0);
+        }
+    }
+    glm::vec3 selfRepulsion(vector<Particle> &particles, float magnitude)
     {
         glm::vec3 force_summation;
         for (Particle &p : particles)
         {
-            if (&p != this && spacing)
+            if (&p != this)
             {
                 float distance = glm::distance(position, p.position);
                 glm::vec3 force_direction = glm::normalize(position - p.position);
-                force_summation += force_direction / distance * spacing;
+                force_summation += force_direction / distance * magnitude;
             }
         }
-        acceleration = force_summation;
-        velocity += acceleration;
-        previous_position = position;
-        position += velocity;
+        return force_summation;
     }
-    void gravity(glm::vec3 attraction_point, float magnitude)
+    glm::vec3 gravity(glm::vec3 attraction_point, float magnitude)
     {
-        glm::vec3 force_direction = glm::normalize(attraction_point - position);
-        float distance = glm::distance(attraction_point, position);
-        distance = MAX(distance, 1);
-        if (distance * magnitude)
+        glm::vec3 force_direction;
+        float distance;
+        if (attraction_point != position)
         {
-            acceleration = force_direction * distance * magnitude;
-            velocity += acceleration;
-            position += velocity;
+            force_direction = glm::normalize(attraction_point - position);
+            distance = glm::distance(attraction_point, position);
+            distance = MAX(distance, 1);
         }
+        else
+        {
+            distance = 1;
+        }
+        return force_direction * distance * magnitude;
     }
     void constrain(vector<Particle> &particles, float distance_limit)
     {

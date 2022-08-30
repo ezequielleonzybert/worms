@@ -3,12 +3,14 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
+    ofBackground(30);
+    ofSetSphereResolution(10);
     ofEnableLighting();
     ofEnableDepthTest();
     light.enable();
-    light.setPosition(0,0,100);
+    light.setDirectional();
 
-    worm = Worm(200, 5);
+    worm = Worm(1000, 1);
 }
 
 //--------------------------------------------------------------
@@ -16,7 +18,7 @@ void ofApp::update()
 {
     worm.update();
     showFps();
-    vr.record("/home/ezequiel/Videos/worms", 20);
+    // vr.record("/home/ezequiel/Videos/worms", 18);
 }
 
 //--------------------------------------------------------------
@@ -30,7 +32,7 @@ void ofApp::draw()
 //--------------------------------------------------------------
 void ofApp::exit()
 {
-    vr.stopRecording();
+    // vr.stopRecording();
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)

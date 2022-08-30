@@ -25,6 +25,9 @@ public:
 	void gotMessage(ofMessage msg);
 	void exit();
 
+	int w = ofGetWidth();
+	int h = ofGetHeight();
+
 	Worm worm;
 	ofEasyCam camera;
 	ofLight light;
