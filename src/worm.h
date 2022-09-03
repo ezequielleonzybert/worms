@@ -7,7 +7,7 @@
 class Worm
 {
 public:
-    int length;
+    int length, target_length;
     float spacing;
     vector<Particle> particles;
     ofSpherePrimitive sphere;
@@ -15,24 +15,36 @@ public:
     Worm(){};
     Worm(int length, float spacing, float width, int resolution)
     {
-        this->length = length;
+        this->length = 0;
+        target_length = length;
         this->spacing = spacing;
         sphere.setRadius(width);
         sphere.setResolution(resolution);
 
         particles.push_back(Particle());
 
-        for (int i = 1; i < length; i++)
+        // for (int i = 1; i < length; i++)
+        // {
+        //     float angle = ofRandom(0, TWO_PI * 4);
+        //     particles.push_back(
+        //         Particle({particles[i - 1].position.x + cos(angle) * spacing,
+        //                   particles[i - 1].position.y + sin(angle) * spacing,
+        //                   particles[i - 1].position.z + sin(ofRandom(0, TWO_PI * 4)) * spacing}));
+        // }
+    }
+    void update()
+    {
+        static int i = 0;
+        if (i < target_length)
         {
+            i++;
             float angle = ofRandom(0, TWO_PI * 4);
             particles.push_back(
                 Particle({particles[i - 1].position.x + cos(angle) * spacing,
                           particles[i - 1].position.y + sin(angle) * spacing,
                           particles[i - 1].position.z + sin(ofRandom(0, TWO_PI * 4)) * spacing}));
         }
-    }
-    void update()
-    {
+
         for (Particle &p : particles)
         {
             glm::vec3 force;
@@ -44,12 +56,10 @@ public:
     }
     void draw()
     {
-        ofNoFill();
-        for (Particle p : particles)
+        for (int i = 3; i < particles.size(); i++)
         {
-            sphere.setPosition(p.position);
+            sphere.setPosition(particles[i - 3].position);
             sphere.draw();
-            // line.curveTo(p.position);
             // glm::mat4 m;
             // m = glm::translate(p.position);
             // ofDrawLine(p.position, p.previous_position);

@@ -15,7 +15,8 @@
 			"iostream": "cpp",
 			"regex": "cpp",
 			"ostream": "cpp",
-			"cmath": "cpp"
+			"cmath": "cpp",
+			"*.ipp": "cpp"
 		}
 	}
 }
